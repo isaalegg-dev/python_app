@@ -1,0 +1,50 @@
+{% extends './base.html' %}
+{%block title%} Inicia sesion {%endblock%}
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css')}}">
+{% endblock %}
+{%block body%}
+<form class="form-signin text-center" style="clear: both;" action="/login" method="POST">
+  <img class="mb-4" src="{{ url_for('static', filename='img/flask.svg')}}" alt="" width="72" height="72">
+  <h1 class="h3 mb-3 font-weight-normal">Inicia sesion</h1>
+
+  {% with messages = get_flashed_messages(with_categories=True) %}
+  {% if messages %}
+  {% for category, m in messages %}
+  {% if category == 'warning' %}
+
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong style='font-size: 14px;'> {{m}} </strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+    </div>
+
+  {% else %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong style='font-size: 14px;'> {{m}} </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+
+  {% endif %}
+  {% endfor%}
+  {% endif %}
+  {% endwith%}
+
+
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label for="inputEmail" class="sr-only">Nombre de usuario</label>
+  <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Nombre de usuario" minlength="5" maxlength="20" required autofocus>
+  <br />
+  <label for="password" class="sr-only">contraseña</label>
+  <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña" required>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+
+
+  <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
+
+
+</form>
+
+{%endblock%}
